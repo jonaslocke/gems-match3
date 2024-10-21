@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GameGrid } from "../classes/GameGrid.class";
 import { Gem as IGem } from "../classes/Gem.class";
-import { Gem } from "./Gem";
 
 interface GameGridComponentProps {
   rows: number;
@@ -31,38 +30,15 @@ export const Game: React.FC<GameGridComponentProps> = ({ rows, cols }) => {
     }
   };
 
+  if (!gameGrid) {
+    return null;
+  }
+
   return (
     <div>
       <h3>Score: {score}</h3>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${cols}, 50px)`,
-        }}
-      >
-        {grid.map((row, rowIndex) =>
-          row.map((gem, colIndex) =>
-            gem ? (
-              <div
-                key={`${rowIndex}-${colIndex}`}
-                onClick={() => console.log(gem)}
-              >
-                <Gem gem={gem} />
-              </div>
-            ) : (
-              <div
-                key={`${rowIndex}-${colIndex}`}
-                style={{
-                  width: "50px",
-                  height: "50px",
-                  backgroundColor: "lightgray",
-                }}
-              ></div>
-            )
-          )
-        )}
-      </div>
+      {gameGrid.draw()}
 
       <button onClick={handleCheckMatches}>Check Matches</button>
     </div>

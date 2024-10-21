@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 export class Gem {
   public type: string;
   public points: number;
@@ -39,5 +41,42 @@ export class Gem {
       default:
         return "gray";
     }
+  }
+
+  draw(key?: string): JSX.Element {
+    const gemClass = clsx("gem", {
+      selected: this.selected,
+      adjacent: this.adjacent,
+    });
+
+    const gemStyle = {
+      backgroundColor: this.getColor(),
+      border: this.selected ? "2px solid gold" : "1px solid black",
+      width: "50px",
+      height: "50px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    };
+
+    return (
+      <div key={key} className={gemClass} style={gemStyle}>
+        {this.type} ({this.points})
+      </div>
+    );
+  }
+
+  static drawEmpty(key?: string): JSX.Element {
+    const emptyStyle = {
+      backgroundColor: "#f0f0f0",
+      border: "1px dashed #ccc",
+      width: "50px",
+      height: "50px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    };
+
+    return <div key={key} className="empty-gem" style={emptyStyle} />;
   }
 }

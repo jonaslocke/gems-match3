@@ -194,4 +194,32 @@ export class GameGrid {
     this.setGridState([...this.grid]);
     return clearedGems;
   }
+
+  public swapGems(
+    pos1: { row: number; col: number },
+    pos2: { row: number; col: number }
+  ) {
+    const temp = this.grid[pos1.row][pos1.col];
+    this.grid[pos1.row][pos1.col] = this.grid[pos2.row][pos2.col];
+    this.grid[pos2.row][pos2.col] = temp;
+  }
+
+  public draw() {
+    return (
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${this.cols}, 50px)`,
+        }}
+      >
+        {this.grid.map((row, rowIndex) =>
+          row.map((gem, colIndex) =>
+            gem
+              ? gem.draw(`${rowIndex}-${colIndex}`)
+              : Gem.drawEmpty(`${rowIndex}-${colIndex}`)
+          )
+        )}
+      </div>
+    );
+  }
 }
